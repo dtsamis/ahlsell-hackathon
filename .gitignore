@@ -12,3 +12,5 @@ weights/
 runs/
 .DS_Store
 Thumbs.db
+
+*.zip
