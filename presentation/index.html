@@ -32,6 +32,14 @@
       </div>
     </div>
     <div class="flex items-center space-x-4 text-xs font-mono">
+      <button id="playPresentationBtn" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-semibold transition flex items-center space-x-1.5 shadow-md shadow-emerald-500/20">
+        <i class="fa-solid fa-circle-play text-sm"></i>
+        <span id="playBtnText">Play Narrated Presentation</span>
+      </button>
+      <a href="/presentation/Ahlsell_Symbol_Detector_Presentation.mp4" download="Ahlsell_Symbol_Detector_Presentation.mp4" class="px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center space-x-1">
+        <i class="fa-solid fa-download text-[11px] text-cyan-400"></i>
+        <span>Download MP4</span>
+      </a>
       <span class="text-slate-400">Slide <span id="currentSlideNum" class="text-cyan-400 font-bold">1</span> of <span id="totalSlidesNum">7</span></span>
       <button id="toggleNotesBtn" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center space-x-1">
         <i class="fa-solid fa-message text-[10px]"></i>
@@ -449,6 +457,16 @@
     </div>
   </aside>
 
+  <!-- Subtitle Bar (During Playback) -->
+  <div id="subtitleBar" class="hidden border-t border-cyan-800/60 bg-slate-900/90 backdrop-blur px-8 py-2.5 z-40 text-center">
+    <div class="inline-flex items-center space-x-2 text-xs font-mono text-cyan-300">
+      <i class="fa-solid fa-volume-high text-cyan-400 animate-pulse"></i>
+      <span id="subtitleText" class="text-slate-200">Narration playing...</span>
+    </div>
+  </div>
+
+  <audio id="slideAudio"></audio>
+
   <!-- Bottom Navigation Bar -->
   <footer class="border-t border-slate-800 bg-slate-950 px-8 py-3 flex items-center justify-between z-30">
     <div class="flex items-center space-x-2">
@@ -543,6 +561,55 @@
         if (currentSlide > 1) goToSlide(currentSlide - 1);
       } else if (e.key.toLowerCase() === "n") {
         speakerNotesDrawer.classList.toggle("hidden");
+      }
+    });
+
+    const playPresentationBtn = document.getElementById("playPresentationBtn");
+    const playBtnText = document.getElementById("playBtnText");
+    const subtitleBar = document.getElementById("subtitleBar");
+    const subtitleText = document.getElementById("subtitleText");
+    const slideAudio = document.getElementById("slideAudio");
+
+    let isPlayingNarration = false;
+
+    function playCurrentSlideAudio() {
+      slideAudio.src = `audio/slide${currentSlide}.mp3`;
+      subtitleText.textContent = speakerNotes[currentSlide] || "";
+      subtitleBar.classList.remove("hidden");
+      slideAudio.play().catch(e => console.log("Audio play prevented:", e));
+    }
+
+    slideAudio.addEventListener("ended", () => {
+      if (isPlayingNarration) {
+        setTimeout(() => {
+          if (currentSlide < totalSlides) {
+            goToSlide(currentSlide + 1);
+            playCurrentSlideAudio();
+          } else {
+            stopNarration();
+          }
+        }, 1200);
+      }
+    });
+
+    function stopNarration() {
+      isPlayingNarration = false;
+      slideAudio.pause();
+      subtitleBar.classList.add("hidden");
+      playBtnText.textContent = "Play Narrated Presentation";
+      playPresentationBtn.classList.replace("from-rose-600", "from-emerald-500");
+      playPresentationBtn.classList.replace("to-red-700", "to-teal-600");
+    }
+
+    playPresentationBtn.addEventListener("click", () => {
+      if (isPlayingNarration) {
+        stopNarration();
+      } else {
+        isPlayingNarration = true;
+        playBtnText.textContent = "Pause Presentation";
+        playPresentationBtn.classList.replace("from-emerald-500", "from-rose-600");
+        playPresentationBtn.classList.replace("to-teal-600", "to-red-700");
+        playCurrentSlideAudio();
       }
     });
 
