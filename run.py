@@ -10,11 +10,11 @@ def main():
     args = parser.parse_args()
 
     print("\n" + "=" * 60)
-    print("  🚀 FloorCAD YOLOv8n CAD Floor Plan Detection Service")
+    print("  [FloorCAD YOLOv8n] CAD Floor Plan Detection Service")
     print("=" * 60)
-    print(f"  • Web UI:      http://{args.host}:{args.port}/")
-    print(f"  • API Docs:    http://{args.host}:{args.port}/docs")
-    print(f"  • Healthcheck: http://{args.host}:{args.port}/api/health")
+    print(f"  * Web UI:      http://{args.host}:{args.port}/")
+    print(f"  * API Docs:    http://{args.host}:{args.port}/docs")
+    print(f"  * Healthcheck: http://{args.host}:{args.port}/api/health")
     print("=" * 60 + "\n")
 
     uvicorn.run("app.main:app", host=args.host, port=args.port, reload=args.reload)
