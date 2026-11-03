@@ -30,6 +30,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 SAMPLES_DIR = os.path.join(BASE_DIR, "samples")
 PRESENTATION_DIR = os.path.join(os.path.dirname(BASE_DIR), "presentation")
+STEEL_TEAM_DIR = os.path.join(os.path.dirname(BASE_DIR), "STEEL-TEAM")
 
 os.makedirs(STATIC_DIR, exist_ok=True)
 os.makedirs(SAMPLES_DIR, exist_ok=True)
@@ -38,6 +39,8 @@ os.makedirs(SAMPLES_DIR, exist_ok=True)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 if os.path.exists(PRESENTATION_DIR):
     app.mount("/presentation", StaticFiles(directory=PRESENTATION_DIR, html=True), name="presentation")
+if os.path.exists(STEEL_TEAM_DIR):
+    app.mount("/STEEL-TEAM", StaticFiles(directory=STEEL_TEAM_DIR, html=True), name="steel-team")
 
 model_manager = FloorCADModelManager.get_instance()
 
