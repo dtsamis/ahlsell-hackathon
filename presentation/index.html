@@ -32,14 +32,10 @@
       </div>
     </div>
     <div class="flex items-center space-x-4 text-xs font-mono">
-      <button id="playPresentationBtn" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-semibold transition flex items-center space-x-1.5 shadow-md shadow-emerald-500/20">
+      <button id="playPresentationBtn" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-semibold transition flex items-center space-x-1.5 shadow-md shadow-emerald-500/20">
         <i class="fa-solid fa-circle-play text-sm"></i>
         <span id="playBtnText">Play Narrated Presentation</span>
       </button>
-      <a href="/presentation/Ahlsell_Symbol_Detector_Presentation.mp4" download="Ahlsell_Symbol_Detector_Presentation.mp4" class="px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center space-x-1">
-        <i class="fa-solid fa-download text-[11px] text-cyan-400"></i>
-        <span>Download MP4</span>
-      </a>
       <span class="text-slate-400">Slide <span id="currentSlideNum" class="text-cyan-400 font-bold">1</span> of <span id="totalSlidesNum">7</span></span>
       <button id="toggleNotesBtn" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center space-x-1">
         <i class="fa-solid fa-message text-[10px]"></i>
@@ -613,7 +609,19 @@
       }
     });
 
-    speakerNotesText.textContent = speakerNotes[1];
+    // Check URL parameters for direct slide or clean recording mode
+    const urlParams = new URLSearchParams(window.location.search);
+    const slideParam = parseInt(urlParams.get("slide"));
+    if (slideParam && slideParam >= 1 && slideParam <= totalSlides) {
+      goToSlide(slideParam);
+    }
+    if (urlParams.get("clean") === "true") {
+      document.querySelector("header").style.display = "none";
+      document.querySelector("footer").style.display = "none";
+      document.getElementById("subtitleBar").style.display = "none";
+    }
+
+    speakerNotesText.textContent = speakerNotes[currentSlide];
   </script>
 </body>
 </html>
