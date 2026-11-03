@@ -1,6 +1,5 @@
 import os
 import asyncio
-import time
 import edge_tts
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,8 +17,9 @@ SLIDE_SCRIPTS = {
     3: "Our solution is Symbol Detector Version 1, powered by a lightweight YOLO eleven-s model with under ten million parameters. By scanning dense drawings at four hundred DPI in high-resolution tiles, the system captures microscopic details without downsampling. Crucially, the engine runs completely on-premise on standard hardware: zero external cloud dependencies, zero latency delays, and guaranteed data confidentiality for proprietary drawings.",
     4: "Here is the visual proof on a real Swedish school blueprint. On the left is the raw drawing, packed with dimensions, room labels, and hatching. In under one hundred milliseconds, our backend cuts through the clutter, cleanly extracting twenty-one distinct elements, including wash basins, classroom whiteboards, and repetitive corridor coat racks.",
     5: "Looking at the performance numbers: the model achieved ninety-five point two percent precision on this unseen test drawing, with one hundred percent recall on critical sanitary fixtures. It accurately captured all eleven coat hooks along corridor rows, with only one single false toilet that an estimator can dismiss in seconds.",
-    6: "For Ahlsell, the business impact is clear. First, quote turnaround collapses from days to seconds, directly boosting contractor win rates. Second, generic blueprint symbols map straight into Ahlsell inventory SKUs. Third, verified visual audit trails drastically reduce job site misorders. And most importantly, complete on-premise security: confidential client blueprints and architect IP never leave your local servers, providing total data sovereignty.",
-    7: "In summary, we have validated a high-speed, accurate backend that bridges architectural drawings directly into Ahlsell's commercial pipeline—rapid, precise, and completely secure on-premise. Thank you, and we welcome your questions."
+    6: "For Ahlsell, the business impact is clear. First, quote turnaround collapses from a full day to seconds, directly boosting contractor win rates. Second, generic blueprint symbols map straight into Ahlsell inventory SKUs. Third, verified visual audit trails drastically reduce job site misorders. And most importantly, complete on-premise security: confidential client blueprints and architect IP never leave your local servers, providing total data sovereignty.",
+    7: "In summary, we have validated a high-speed, accurate backend that bridges architectural drawings directly into Ahlsell's commercial pipeline—rapid, precise, and completely secure on-premise.",
+    8: "Thank you for your time and consideration. The STEEL-TEAM is now ready for your questions and discussion."
 }
 
 async def generate():
